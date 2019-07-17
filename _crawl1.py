@@ -1,3 +1,11 @@
+# python3
+# -*- coding: utf-8 -*-
+__author__ = '飞鱼与熊掌'
+
+'''
+爬取链家北京地区已经交易的房家信息
+'''
+
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -80,11 +88,11 @@ class lianjia_crawl():
                     goods_orientation = goods_t[0].replace(" ", "")
                     goods_decor = goods_t[1].replace(" ", "")
                     goods_realprice = float(item.find('.address .totalPrice').text().replace("万",""))
-
-
+                    #住房成交价格
+                    
                     goods_position = item.find('.flood .positionInfo').text().replace(" ", "") + "-" + goods_add
                     goods_unitPrice = float(item.find('.flood .unitPrice').text().replace(" ","").replace("元/平",""))
-
+                    #住房平均价格
                     try:
                         goods_dealhouseInfo = item.find('.dealHouseInfo .dealHouseTxt span:nth-child(2)').text(). \
                             replace(" ", "").replace("/", "")
@@ -96,7 +104,8 @@ class lianjia_crawl():
                     goods_totalprice = float(
                         item.find('.dealCycleeInfo .dealCycleTxt span:nth-child(1)').text().replace(" ", "").
                             replace("万", "").replace("挂牌",""))
-
+                    #住房发布价格
+                    #
                     self.i = self.i + 1
                     list_info.append(
                         [self.i , goods_dealhouseInfo,goods_position, goods_size, goods_housetype, goods_orientation,

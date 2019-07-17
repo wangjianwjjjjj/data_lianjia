@@ -1,3 +1,11 @@
+# python3
+# -*- coding: utf-8 -*-
+__author__ = '飞鱼与熊掌'
+
+'''
+爬取链家北京地区在售的房家信息
+'''
+
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -73,23 +81,31 @@ class lianjia_crawl():
             goods_items = doc('.content .leftContent .sellListContent .clear .info').items()
             for item in goods_items:
                 try:
+                #防止由于网页其中一个数据的排版格式不同于其他的，而不让程序停止运行	
                     goods_title = item.find('.title a').text().replace(" ", "")
+                    #title
                     goods_address = item.find('.address .houseInfo').text().split('|')
 
                     goods_add = goods_address[0].replace(" ", "")
                     goods_housetype = goods_address[1].replace(" ", "")
+                    #住房户型
                     goods_size = float(goods_address[2].replace(" ", "").replace("平米", ""))
+                    #住房面积
                     goods_orientation = goods_address[3].replace(" ", "")
+                    #住房朝向
                     goods_decor = goods_address[4].replace(" ", "")
-
+                    #住房装修
                     goods_position = item.find('.flood .positionInfo').text().replace(" ", "") + "-" + goods_add
+                    #住房位置
                     goods_star1 = item.find('.followInfo').text().split("/")
                     goods_star = float(goods_star1[0].replace(" ", "").replace("人关注", ""))
+                    #关注人数
                     goods_totalprice = float(
                         item.find('.priceInfo .totalPrice').text().replace(" ", "").replace("万", ""))
+                    #住房价格
                     goods_perprice = float(
                         item.find('.priceInfo .unitPrice').text().replace(" ", "").replace("单价", "").replace("元/平米",
-                                                                                                           ""))
+                    #住房平均价格                                                                                       ""))
                     self.i = self.i + 1
                     list_info.append(
                         [self.i,goods_title, goods_position, goods_size, goods_housetype, goods_orientation, goods_decor,
