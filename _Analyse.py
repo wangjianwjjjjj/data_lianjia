@@ -18,8 +18,8 @@ class lianjia_analyse():
         self.data = []
 
     def getdata(self):
-        conn = pymysql.connect(host="127.0.0.1", port=3306, user='root',
-                               password='jian@', database='data_analyse')
+        conn = pymysql.connect(host="127.0.0.1", port=3306, user='username',
+                               password='password', database='data_analyse')
         sql = '''
         select * from data_lianjia_chengjiao
         '''
